@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <Game />
     <div class="container" style="margin:0;padding:0">
       <div class="row">
         <div class="col-sm-8">
@@ -33,6 +34,17 @@
     </div>
   </div>
 </template>
+
+<script>
+import Game from './components/Game.vue'
+
+export default {
+  name: 'JSRacer',
+  components: {
+    Game
+  }
+}
+</script>
 
 <style>
 .bg {
