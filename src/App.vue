@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-    <Game />
+    <LandingPage></LandingPage>
+    <!-- <Game /> -->
     <!-- <div class="container" style="margin:0;padding:0">
       <div class="row">
         <div class="col-sm-8">
@@ -36,12 +37,13 @@
 </template>
 
 <script>
-import Game from './components/Game.vue'
-
+// import Game from './components/Game.vue'
+import LandingPage from './views/LandingPage.vue'
 export default {
   name: 'JSRacer',
   components: {
-    Game
+    // Game,
+    LandingPage
   }
 }
 </script>
