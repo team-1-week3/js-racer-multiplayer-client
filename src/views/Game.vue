@@ -60,7 +60,7 @@ export default {
       }
     }
   },
-  computed () {
+  computed: {
     playerName () {
       return this.$store.state.playerName
     }
