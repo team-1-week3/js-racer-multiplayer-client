@@ -12,9 +12,6 @@
         <p>
           <button @click="move()">GO!</button>
         </p>
-        <p>
-          <button @click="step()">Roll dice!</button>
-        </p>
       </div>
   </div>
 </template>
@@ -70,13 +67,10 @@ export default {
     move () {
       const payload = {
         index: this.index,
-        dice: this.dice * 40
+        dice: this.dice + 30
       }
       this.socket.emit('move', payload)
       this.dice = 0
-    },
-    step () {
-      this.dice = 3
     }
   }
 }
