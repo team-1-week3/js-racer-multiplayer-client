@@ -22,55 +22,41 @@ export default {
   name: 'Game',
   data () {
     return {
-      index: 0,
       winner: false,
-      dice: 0,
       socket: {},
-      context1: {},
-      context2: {},
-      positions: [
-        {
-          x: 0,
-          y: 0
-        },
-        {
-          x: 0,
-          y: 0
-        }
-      ]
+      context: {}
     }
   },
   created () {
     this.socket = io('http://localhost:3000')
   },
   mounted () {
-    this.socket.on('index', data => {
-      this.index = data
-    })
+    const posx = this.$store.state.position.x
+    const posy = this.$store.state.position.y
     this.context = this.$refs.game.getContext('2d')
-    this.socket.on('positions', data => {
-      this.positions = data
-      this.socket.on('index', data => {
-        this.index = data
-      })
-      this.context.clearRect(0, 0, this.$refs.game.width, this.$refs.game.height)
-      this.context.fillRect(this.positions[0].x, this.positions[0].y, 20, 20)
-      this.context.fillRect(this.positions[1].x, this.positions[1].y, 20, 20)
-    })
-    this.socket.on('winner', data => {
-      if (data) {
-        this.winner = true
-      }
-    })
+    this.context.clearRect(0, 0, this.$refs.game.width, this.$refs.game.height)
+    this.context.fillRect(posx, posy, 20, 20)
   },
   methods: {
     move () {
-      const payload = {
-        index: this.index,
-        dice: this.dice += 30
+      console.log(this.winner);
+      this.socket.on('winner', data => {
+        if(data){
+          this.winner = true
+          console.log(this.winner);
+        }
+      })
+      console.log(this.winner);
+      if (!this.winner) {
+        this.$store.commit('SET_POSY', 20)
+        const posx = this.$store.state.position.x
+        const posy = this.$store.state.position.y
+        this.context = this.$refs.game.getContext('2d')
+        this.context.clearRect(0, 0, this.$refs.game.width, this.$refs.game.height)
+        this.context.fillRect(posx, posy, 20, 20)
+        const position = this.$store.state.position
+        this.socket.emit('move', position)
       }
-      this.socket.emit('move', payload)
-      this.dice = 0
     }
   }
 }
