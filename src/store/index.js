@@ -1,14 +1,22 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import router from '../router/index.js'
+
 Vue.use(Vuex)
-// const URL='http://localhost:3000'
+
 export default new Vuex.Store({
   state: {
+    position: {
+      x: 220,
+      y: 620
+    },
     playerName: '',
     isPlaying: false
   },
   mutations: {
+    SET_POSY (state, payload) {
+      state.position.y -= payload
+    },
     SET_PLAYERNAME (state, payload) {
       state.playerName = payload
     },
@@ -21,8 +29,6 @@ export default new Vuex.Store({
       console.log('>>> MASUK STORE: PLAYGAME')
       context.commit('SET_PLAYERNAME', payload.playerName)
       context.commit('SET_ISPLAYING', payload.isPlaying)
-      // localStorage.setItem('playerName', this.playerName)
-      // localStorage.setItem('isPlaying', this.isPlaying)
       localStorage.setItem('playerName', payload.playerName)
       localStorage.setItem('isPlaying', payload.isPlaying)
       router.push({ name: 'Game' })
