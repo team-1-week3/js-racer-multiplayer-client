@@ -67,7 +67,7 @@ export default {
     move () {
       const payload = {
         index: this.index,
-        dice: this.dice + 30
+        dice: this.dice += 30
       }
       this.socket.emit('move', payload)
       this.dice = 0

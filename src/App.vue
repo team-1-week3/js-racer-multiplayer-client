@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Game />
-    <div class="container" style="margin:0;padding:0">
+    <!-- <div class="container" style="margin:0;padding:0">
       <div class="row">
         <div class="col-sm-8">
           <div class="bg">
@@ -31,7 +31,7 @@
           <button class="btn btn-primary ml-5">MOVE</button>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
