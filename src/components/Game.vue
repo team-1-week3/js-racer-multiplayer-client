@@ -13,8 +13,7 @@
           <button @click="move()">GO!</button>
         </p>
         <p>
-          <button @click="random()">Roll dice!</button>
-          {{ dice }}
+          <button @click="step()">Roll dice!</button>
         </p>
       </div>
   </div>
@@ -76,9 +75,8 @@ export default {
       this.socket.emit('move', payload)
       this.dice = 0
     },
-    random () {
-      const step = Math.ceil(Math.random() * 6)
-      this.dice = step
+    step () {
+      this.dice = 3
     }
   }
 }
