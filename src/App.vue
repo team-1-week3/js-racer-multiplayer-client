@@ -1,50 +1,13 @@
 <template>
   <div id="app">
-    <LandingPage></LandingPage>
-    <!-- <Game /> -->
-    <!-- <div class="container" style="margin:0;padding:0">
-      <div class="row">
-        <div class="col-sm-8">
-          <div class="bg">
-            <img class="mobil" src="./assets/car.png" />
-            <img class="mobil2" src="./assets/car.png" />
-          </div>
-        </div>
-        <div class="col-sm-4">
-          <div class="w3-container ml-5">
-            <h2>Rank</h2>
-            <ul class="w3-ul w3-card-4">
-              <li class="w3-bar">
-                <img src="https://www.w3schools.com/w3css/img_avatar2.png" class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
-                <div class="w3-bar-item mt-2">
-                  <span>Player1</span>
-                </div>
-              </li>
-              <li class="w3-bar">
-                <img src="https://www.w3schools.com/w3css/img_avatar5.png" class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
-                <div class="w3-bar-item mt-2">
-                  <span>Player2</span>
-                </div>
-              </li>
-            </ul>
-          </div>
-          <br/>
-          <button class="btn btn-primary ml-5">MOVE</button>
-        </div>
-      </div>
-    </div> -->
+     <router-view/>
   </div>
 </template>
 
 <script>
-// import Game from './components/Game.vue'
-import LandingPage from './views/LandingPage.vue'
 export default {
   name: 'JSRacer',
-  components: {
-    // Game,
-    LandingPage
-  }
+  components: {}
 }
 </script>
 
