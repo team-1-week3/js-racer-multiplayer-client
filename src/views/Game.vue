@@ -1,6 +1,7 @@
 <template>
   <div>
       <h1>JS Racer</h1>
+      <p>{{ playerName }}</p>
       <p v-if="winner">we have a winner</p>
       <div>
         <canvas
@@ -57,6 +58,11 @@ export default {
         const position = this.$store.state.position
         this.socket.emit('move', position)
       }
+    }
+  },
+  computed () {
+    playerName () {
+      return this.$store.state.playerName
     }
   }
 }
