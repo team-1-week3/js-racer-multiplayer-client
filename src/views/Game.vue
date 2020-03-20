@@ -1,5 +1,11 @@
 <template>
   <div>
+    <!-- <audio controls autoplay loop hidden>
+      <source src=".././assets/ck.mp3" type="audio/wav">
+    </audio> -->
+    <audio id="audio" hidden>
+      <source src=".././assets/speeding-truck-1-sound-effect-69406128.mp3" type="audio/wav">
+    </audio>
     <div class="container" style="margin:0;padding:0">
       <div class="row">
         <div class="col-sm-8">
@@ -12,8 +18,6 @@
         <div class="col-sm-4">
           <div class="w3-container ml-5">
             <h2>Players</h2>
-            {{winnerName}}
-            <span> YEAAAYY MENANG </span>
             <ul class="w3-ul w3-card-4">
               <li class="w3-bar w3-bar-1">
                 <img src="https://www.w3schools.com/w3css/img_avatar2.png" class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
@@ -38,6 +42,7 @@
 <script>
 import io from 'socket.io-client'
 import { mapState } from 'vuex'
+import swal from 'sweetalert'
 
 export default {
   name: 'Game',
@@ -64,11 +69,14 @@ export default {
       if (data) {
         this.winner = true
         this.winnerName = data
+        swal('CONGRATULATION', '' + this.winnerName + ' You Win the Game !')
       }
     })
   },
   methods: {
     move () {
+      const audio = document.getElementById('audio')
+      audio.play()
       if (!this.winner) {
         const payload = {
           id: this.socket.id,
@@ -86,6 +94,9 @@ export default {
 </script>
 
 <style scoped>
+.swal-text {
+  font-weight: bold
+}
 .w3-bar-1 {
   position: relative;
   animation: myfirst 1s 1;
