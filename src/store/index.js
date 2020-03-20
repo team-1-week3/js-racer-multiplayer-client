@@ -8,10 +8,12 @@ export default new Vuex.Store({
   state: {
     position: [
       {
+        top: 0, // perubahan
         x: 340,
         y: 620
       },
       {
+        top: 0,
         x: 340,
         y: 620
       }
