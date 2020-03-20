@@ -12,7 +12,7 @@ export default new Vuex.Store({
         y: 620
       },
       {
-        x: 100,
+        x: 340,
         y: 620
       }
     ],
