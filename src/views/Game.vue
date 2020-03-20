@@ -19,51 +19,49 @@
 
 <script>
 import io from 'socket.io-client'
+import { mapState } from 'vuex'
+
 export default {
   name: 'Game',
   data () {
     return {
+      id: "",
       winner: false,
-      socket: {},
-      context: {}
+      dice: 0
     }
   },
   created () {
     this.socket = io('http://localhost:3000')
   },
   mounted () {
-    const posx = this.$store.state.position.x
-    const posy = this.$store.state.position.y
-    this.context = this.$refs.game.getContext('2d')
-    this.context.clearRect(0, 0, this.$refs.game.width, this.$refs.game.height)
-    this.context.fillRect(posx, posy, 20, 20)
+     this.context = this.$refs.game.getContext('2d')
+    
+    this.socket.on('positions', data => {      
+      this.$store.state.positions = data
+
+      this.context.clearRect(0, 0, this.$refs.game.width, this.$refs.game.height)
+      this.context.fillRect(this.$store.state.positions[0].x, this.$store.state.positions[0].y, 20, 20)
+      this.context.fillRect(this.$store.state.positions[1].x, this.$store.state.positions[1].y, 20, 20)
+    })
+    
+    this.socket.on('winner', data => {
+      if (data) {
+        this.winner = true
+      }
+    })
   },
   methods: {
     move () {
-      console.log(this.winner);
-      this.socket.on('winner', data => {
-        if(data){
-          this.winner = true
-          console.log(this.winner);
-        }
-      })
-      console.log(this.winner);
-      if (!this.winner) {
-        this.$store.commit('SET_POSY', 20)
-        const posx = this.$store.state.position.x
-        const posy = this.$store.state.position.y
-        this.context = this.$refs.game.getContext('2d')
-        this.context.clearRect(0, 0, this.$refs.game.width, this.$refs.game.height)
-        this.context.fillRect(posx, posy, 20, 20)
-        const position = this.$store.state.position
-        this.socket.emit('move', position)
+       const payload = {
+        id: this.socket.id,
+        dice: this.dice + 20
       }
+      this.socket.emit('move', payload)
+      this.dice = 0
     }
   },
   computed: {
-    playerName () {
-      return this.$store.state.playerName
-    }
+    ...mapState(['playerName']),
   }
 }
 </script>

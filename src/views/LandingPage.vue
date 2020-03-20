@@ -22,15 +22,13 @@ export default {
   components: {},
   methods: {
     enterGame () {
-      console.log('>>> MASUK LANDING-PAGE: ENTERGAME')
       const payload = {
         playerName: this.playerName,
         isPlaying: true
       }
       this.$store.dispatch('playGame', payload)
     }
-  },
-  computed: {}
+  }
 }
 </script>
 

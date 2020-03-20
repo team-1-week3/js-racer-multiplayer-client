@@ -6,17 +6,20 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    position: {
-      x: 220,
-      y: 620
-    },
+    position: [
+      {
+        x: 340,
+        y: 620
+      },
+      {
+        x: 100,
+        y: 620
+      }
+    ],
     playerName: '',
     isPlaying: false
   },
   mutations: {
-    SET_POSY (state, payload) {
-      state.position.y -= payload
-    },
     SET_PLAYERNAME (state, payload) {
       state.playerName = payload
     },
@@ -26,7 +29,6 @@ export default new Vuex.Store({
   },
   actions: {
     playGame (context, payload) {
-      console.log('>>> MASUK STORE: PLAYGAME')
       context.commit('SET_PLAYERNAME', payload.playerName)
       context.commit('SET_ISPLAYING', payload.isPlaying)
       localStorage.setItem('playerName', payload.playerName)
