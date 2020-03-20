@@ -4,25 +4,27 @@
       <div class="row">
         <div class="col-sm-8">
           <div class="bg">
-            <img class="mobil" src=".././assets/car.png" />
-            <img class="mobil2" src=".././assets/car.png" />
-            <button class="btn btn-danger console">MOVE</button>
+            <img class="mobil" src=".././assets/car.png" :style="`top:${topMobil1}%`" />
+            <img class="mobil2" src=".././assets/jsracer-mobil2.png" :style="`top:${topMobil2}%`" />
+            <button class="btn btn-danger console"  @click="move()">MOVE</button>
           </div>
         </div>
         <div class="col-sm-4">
           <div class="w3-container ml-5">
-            <h2>Rank</h2>
+            <h2>Players</h2>
+            {{winnerName}}
+            <span> YEAAAYY MENANG </span>
             <ul class="w3-ul w3-card-4">
               <li class="w3-bar w3-bar-1">
                 <img src="https://www.w3schools.com/w3css/img_avatar2.png" class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
                 <div class="w3-bar-item mt-2">
-                  <span>Player1</span>
+                  <span>{{playerName}}</span>
                 </div>
               </li>
               <li class="w3-bar w3-bar-2">
                 <img src="https://www.w3schools.com/w3css/img_avatar5.png" class="w3-bar-item w3-circle w3-hide-small" style="width:85px">
                 <div class="w3-bar-item mt-2">
-                  <span>Player2</span>
+                  <span>Other Player</span>
                 </div>
               </li>
             </ul>
@@ -30,22 +32,6 @@
         </div>
       </div>
     </div>
-      <!-- <h1>JS Racer</h1>
-      <h1>JS Racer</h1>
-      <p>{{ playerName }}</p>
-      <p v-if="winner">we have a winner</p>
-      <p v-if="winnerName"> {{ winnerName }}</p>
-      <div>
-        <canvas
-          ref="game"
-          width="480px"
-          height="640px"
-          style="border: 1px solid black">
-        </canvas>
-        <p>
-          <button @click="move()">GO!</button>
-        </p>
-      </div> -->
   </div>
 </template>
 
@@ -59,22 +45,19 @@ export default {
     return {
       id: '',
       winner: false,
-      dice: 0,
-      winnerName: ''
+      winnerName: '',
+      topMobil1: 80,
+      topMobil2: 80,
+      otherPlayer: ''
     }
   },
   created () {
     this.socket = io('http://localhost:3000')
   },
   mounted () {
-    this.context = this.$refs.game.getContext('2d')
-
     this.socket.on('positions', data => {
-      this.$store.state.positions = data
-
-      this.context.clearRect(0, 0, this.$refs.game.width, this.$refs.game.height)
-      this.context.fillRect(this.$store.state.positions[0].x, this.$store.state.positions[0].y, 20, 20)
-      this.context.fillRect(this.$store.state.positions[1].x, this.$store.state.positions[1].y, 20, 20)
+      this.topMobil1 = data[0].top
+      this.topMobil2 = data[1].top
     })
 
     this.socket.on('winner', data => {
@@ -89,7 +72,6 @@ export default {
       if (!this.winner) {
         const payload = {
           id: this.socket.id,
-          dice: this.dice + 20,
           name: this.playerName
         }
         this.socket.emit('move', payload)
@@ -103,13 +85,12 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .w3-bar-1 {
   position: relative;
   animation: myfirst 1s 1;
   animation-direction: normal;
-  top: 77px;
+  /* top: 77px; */
 }
 /* .w3-bar-1{
   -webkit-transition: 3s;
@@ -119,20 +100,20 @@ export default {
   transition: 3s;
   top: 77px;
 } */
-@keyframes myfirst {
+/* @keyframes myfirst {
   0%   {background: red; left: 0px; top: 0px;}
   100%  {background: green; left: 0px; top: 77px;}
-}
+} */
 .w3-bar-2 {
   position: relative;
   animation: myfirst2 1s 1;
   animation-direction: normal;
-  top:-77px
+  /* top:-77px */
 }
-@keyframes myfirst2 {
+/* @keyframes myfirst2 {
   0%   {background: red; left: 0px; top: 0px;}
   100%  {background: green; left: 0px; top: -77px;}
-}
+} */
 /* .w3-bar-2{
   -webkit-transition: 3s;
   -moz-transition: 3s;
@@ -154,7 +135,7 @@ export default {
   height: 100vh;
 }
 .mobil {
-  top: 80%; /*tinggal mainan top*/
+  top: 80%;
   left: 27%;
   height: 120px;
   width: 80px;
@@ -162,7 +143,7 @@ export default {
   position: absolute;
 }
 .mobil2 {
-  top: 80%; /*tinggal mainan top*/
+  top: 80%;
   left: 62%;
   height: 120px;
   width: 80px;
