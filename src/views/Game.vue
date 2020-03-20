@@ -57,7 +57,7 @@ export default {
     }
   },
   created () {
-    this.socket = io('http://localhost:3000')
+    this.socket = io('https://blooming-plains-20341.herokuapp.com')
   },
   mounted () {
     this.socket.on('positions', data => {
@@ -69,7 +69,13 @@ export default {
       if (data) {
         this.winner = true
         this.winnerName = data
-        swal('CONGRATULATION', '' + this.winnerName + ' You Win the Game !')
+        if (this.winnerName === this.playerName) {
+          swal('CONGRATULATION', '' + this.winnerName + ' You Win the Game !')
+        } else {
+          swal('SORRY', ' You Lost the Game ! the Winner is ' + this.winnerName)
+        }
+        localStorage.clear()
+        this.$router.push('/')
       }
     })
   },
